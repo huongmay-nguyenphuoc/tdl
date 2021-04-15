@@ -18,7 +18,7 @@ $(document).ready(function () {
     $('body').on('click', '#formInscription', function () {
         $('#message').empty();
         $.post(
-            'api.php',
+            'apiModule.php',
             {
                 form: 'inscription',
                 email: $('#email').val(),
@@ -39,7 +39,7 @@ $(document).ready(function () {
     $('body').on('click', '#formConnexion', function () {
         $('#message').empty();
         $.post(
-            'api.php',
+            'apiModule.php',
             {
                 form: 'connexion',
                 email: $('#email').val(),
@@ -70,9 +70,9 @@ $(document).ready(function () {
 
 
     /*DECONNEXION*/
-    $('body').on('click', '#logout', function () {
+    $('body').on('click', '.logout', function () {
         $.post(
-            'api.php',
+            'apiModule.php',
             {
                 logout: 'logout'
             },

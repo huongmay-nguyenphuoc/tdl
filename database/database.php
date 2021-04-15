@@ -23,8 +23,8 @@ class database
 
     public function userExists($email)
     {
-        $request = $this->pdo->prepare("SELECT * FROM user WHERE email ='" . $email . "'");
-        $request->execute();
+        $request = $this->pdo->prepare("SELECT * FROM user WHERE email = ?");
+        $request->execute([$email]);
         $userExists = $request->fetch(PDO::FETCH_ASSOC);
         return $userExists;
     }
@@ -36,5 +36,23 @@ class database
             ':email' => $email,
             ':password' => $password));
         return $insert;
+    }
+
+    public function insertTask($idUser, $titleTask)
+    {
+        $request = $this->pdo->prepare("INSERT INTO task (`id_user`, `title`) VALUES (:idUser, :title)");
+        $insert = $request->execute(array(
+            ':idUser' => $idUser,
+            ':title' => $titleTask));
+        $idTask = $this->pdo->lastInsertId();
+        return $idTask;
+    }
+
+    public function selectTask($idTask)
+    {
+        $request = $this->pdo->prepare("SELECT * FROM task WHERE id = ?");
+        $request->execute([$idTask]);
+        $taskData = $request->fetch(PDO::FETCH_ASSOC);
+        return $taskData;
     }
 }

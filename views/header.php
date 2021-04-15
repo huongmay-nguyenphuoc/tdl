@@ -1,4 +1,4 @@
 <header>
 <a href="index.php">dFeL</a>
-    <p id="logout">Log Out</p>
+    <button class="logout">Log Out</button>
 </header>

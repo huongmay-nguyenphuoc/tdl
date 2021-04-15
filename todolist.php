@@ -18,17 +18,33 @@ var_dump($_SESSION);
 <main>
     <section>
         <article>
-            <h1></h1>
-            <h2></h2>
+            <h1>To do List</h1>
+            <h2>Utilisateur : <? /*= $_SESSION['user'] */ ?> </h2>
+            <button class="logout">Log Out</button>
         </article>
     </section>
     <section>
-        <article>
+        <article class="list">
+            <h3>Taches a faire</h3>
+            <div id="toDoList">
+            </div>
+            <form methode="post">
+                <input type="text" id="userId" hidden value="<?= $_SESSION['id']?>">
+                <input type="text" id="titleTask" placeholder="Ajouter une tache">
+                <button id="addTask">+</button>
+            </form>
+        </article>
+
+        <article class="list">
+            <h3>Taches terminées</h3>
+            <div id="doneList">
+            </div>
         </article>
     </section>
 </main>
 <?php require_once 'views/footer.php'; ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="module.js"></script>
+<script src="todo.js"></script>
 </body>
 </html>
