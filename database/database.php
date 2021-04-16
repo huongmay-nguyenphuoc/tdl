@@ -55,4 +55,25 @@ class database
         $taskData = $request->fetch(PDO::FETCH_ASSOC);
         return $taskData;
     }
+
+
+    public function selectTasks($idUser)
+    {
+        $request = $this->pdo->prepare("SELECT * FROM task WHERE id_user = ? AND status = 'todo' ");
+        $request->execute([$idUser]);
+        $tasksUserToDo = $request->fetchAll(PDO::FETCH_ASSOC);
+
+        $request2 = $this->pdo->prepare("SELECT * FROM task WHERE id_user = ? AND status = 'done' ");
+        $request2->execute([$idUser]);
+        $tasksUserDone = $request2->fetchAll(PDO::FETCH_ASSOC);
+        $tasksUser = array('toDo' => $tasksUserToDo, 'done' => $tasksUserDone);
+        return $tasksUser;
+    }
+
+    public function endTask($idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE task SET status = 'done', END = NOW() WHERE id = ?");
+        $request->execute([$idTask]);
+        return date('d-m-Y');
+    }
 }
