@@ -11,7 +11,6 @@ $(document).ready(function () {
                 titleTask: $('#titleTask').val()
             },
             function (idTask) {
-                console.log(idTask);
                 $.post(
                     'apiToDo.php',
                     {
@@ -19,9 +18,10 @@ $(document).ready(function () {
                         idTask: idTask
                     },
                     function (result) {
-                        console.log(result);
                         let data = JSON.parse(result);
-                        $("#toDoList").append("<li class='liTask' id='" + data.id + "'>" + data.title + "</li>");
+                        $("#toDoList").append("<li class='liTask' id='" + data.id + "'>" +
+                            "<input class='liTaskTitle' readOnly='readonly' value='" + data.title + "'</li>");
+                        $('#titleTask').val('');
                     }
                 )
             },
@@ -35,7 +35,15 @@ $(document).ready(function () {
         let idTask = this.id;
         let thisLi = this;
 
+        //Ferme le détail de l'ancienne tache active
         if ($(thisLi).children('.modal').length === 0) {
+            $('li').children('.modal').fadeOut(200, function () {
+                $(this).remove();
+            });
+            $('li').children('.liTaskTitle').attr("readonly", true);
+            $('li').children('.liTaskTitle').css('cursor', 'default');
+
+            //récupère détails de la tache et l'affiche
             $.post(
                 'apiToDo.php',
                 {
@@ -43,24 +51,76 @@ $(document).ready(function () {
                     idTask: idTask
                 },
                 function (result) {
-                    console.log(result);
                     let data = JSON.parse(result);
-                    $(thisLi).append("<div class='modal'>" +
-                        "<p>Date création : " + data.start + "</p>" +
-                        "<textarea class='liTaskDesc' placeholder='Dis-m\'en plus ...'>" + data.description + "</textarea>" +
-                        "<input type='checkbox' class='liTaskFinish'>" +
-                        +"</div>");
-                }
-            )
+                    let date = new Date(data.start);
+                    let options = [{day: 'numeric'}, {month: 'short'}, {year: 'numeric'}];
+                    date = date.toLocaleDateString('en-Us', options);
+                    $("<div class='modal'>" +
+                        "<div><span>Création : " + date + "</span><input  title='marquer comme terminée' type='checkbox' class='liTaskFinish'></div>" +
+                        "<div><textarea class='liTaskDesc' placeholder='description'>" + data.description + "</textarea>" +
+                        "<button class='addDescription'>Sauvegarder</button></div>"
+                        + "</div>").hide().appendTo($(thisLi)).fadeIn(200);
+                });
         }
     });
 
 
-    /!*MARQUER TACHE COMME FAITE*!/
+    /*UPDATE TITRE*/
+    // clique sur le titre pour pouvoir le modifier
+    $('body').on('click', '.liTaskTitle', function () {
+        let liTask = $(this).parents('li');
+        if (liTask.children('.modal').length >= 1) {
+            $(this).attr("readonly", false);
+            $(this).css('cursor', 'text');
+        }
+    });
+    // change valeur si nouvelle valeur est pas vide
+    $('body').on('focusin', '.liTaskTitle', function () {
+        $(this).data('val', $(this).val());
+    }).on('change', '.liTaskTitle', function () {
+        let oldTitle = $(this).data('val');
+        let newTitle = $(this).val();
+        if (newTitle.length >= 1) {
+            let idTask = $(this).parents('li').attr('id');
+            $.post(
+                'apiToDo.php',
+                {
+                    action: "updateTitle",
+                    idTask: idTask,
+                    newTitle: newTitle
+                },
+                function (result) {
+                    $(this).val(newTitle);
+                });
+        } else {
+            $(this).val(oldTitle);
+        }
+    });
+
+
+    /*AJOUT DESCRIPTION*/
+    $('body').on('click', '.addDescription', function () {
+        let liTask = $(this).parents('li');
+        let idTask = $(this).parents('li').attr('id');
+        let textarea = $(liTask).find('.liTaskDesc');
+        let description = $(liTask).find('.liTaskDesc').val();
+        $.post(
+            'apiToDo.php',
+            {
+                action: "addDescription",
+                idTask: idTask,
+                description: description
+            },
+            function (result) {
+                $(textarea).text(description);
+            });
+    });
+
+
+    /*MARQUER TACHE COMME FAITE*/
     $('body').on('click', '.liTaskFinish', function () {
         let liTask = $(this).parents('li');
         let idTask = $(this).parents('li').attr('id');
-        console.log(idTask);
         $.post(
             'apiToDo.php',
             {
@@ -70,8 +130,10 @@ $(document).ready(function () {
             function (endTask) {
                 console.log(endTask);
                 $(liTask).children('.modal').remove();
-                liTask.append("<p class='liTaskEnd'> Fin : " + endTask + "</p>");
-                liTask.appendTo($('#doneList'));
+                liTask.fadeOut(300, function () {
+                    liTask.append("<input type='checkbox' checked disabled class='liTaskEnd'>" + endTask);
+                    $(liTask).hide().appendTo($('#doneList')).fadeIn(300);
+                });
             },
             'json'
         );

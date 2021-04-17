@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,8 +21,12 @@
     <section>
         <article id="displayForm">
             <p>Crée ta liste, ajoute des tâches, coche des cases ! Tu vas voir, c'est super fun.</p>
-            <p>Mais avant ça, <span class="callForm" id="callFormInscription">inscris-toi</span>. Ou si tu as déjà un
-                compte, <span class="callForm" id="callFormConnexion">connecte-toi</span>.</p>
+            <?php if (empty($_SESSION)) : ?>
+                <p>Mais avant ça, <span class="callForm" id="callFormInscription">inscris-toi</span>. Ou si tu as déjà
+                    un compte, <span class="callForm" id="callFormConnexion">connecte-toi</span>.</p>
+            <?php else : ?>
+                <button class="logout">Log Out</button>
+            <?php endif; ?>
         </article>
     </section>
 </main>

@@ -40,10 +40,11 @@ class database
 
     public function insertTask($idUser, $titleTask)
     {
-        $request = $this->pdo->prepare("INSERT INTO task (`id_user`, `title`) VALUES (:idUser, :title)");
+        $request = $this->pdo->prepare("INSERT INTO task (`id_user`, `title`, `description`) VALUES (:idUser, :title, :description)");
         $insert = $request->execute(array(
             ':idUser' => $idUser,
-            ':title' => $titleTask));
+            ':title' => $titleTask,
+            ':description' => ''));
         $idTask = $this->pdo->lastInsertId();
         return $idTask;
     }
@@ -76,4 +77,20 @@ class database
         $request->execute([$idTask]);
         return date('d-m-Y');
     }
+
+    public function addDescription($description, $idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE task SET description = ? WHERE id = ?");
+        $request->execute([$description, $idTask]);
+        return $description;
+    }
+
+    public function updateTitle($newTitle, $idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE task SET title = ? WHERE id = ?");
+        $request->execute([$newTitle, $idTask]);
+        return $newTitle;
+    }
+
+
 }

@@ -17,6 +17,22 @@ if (isset($_POST['action']) && ($_POST['action'] === 'displayTask')) {
     echo json_encode($dataTask);
 }
 
+/*AJOUTER DESCRIPTION*/
+if (isset($_POST['action']) && ($_POST['action'] === 'addDescription')) {
+    $idTask = htmlspecialchars($_POST['idTask']);
+    $description = htmlspecialchars($_POST['description']);
+    $dataTask = $db->addDescription($description, $idTask);
+    echo json_encode($dataTask);
+}
+
+/*UPDATE TITRE*/
+if (isset($_POST['action']) && ($_POST['action'] === 'updateTitle')) {
+    $idTask = htmlspecialchars($_POST['idTask']);
+    $newTitle = htmlspecialchars($_POST['newTitle']);
+    $dataTask = $db->updateTitle($newTitle, $idTask);
+    echo json_encode($dataTask);
+}
+
 /*MARQUER COMME TERMINEE*/
 if (isset($_POST['action']) && ($_POST['action'] === 'finish')) {
     $idTask = htmlspecialchars($_POST['idTask']);
