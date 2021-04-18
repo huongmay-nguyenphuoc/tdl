@@ -1,7 +1,11 @@
 $(document).ready(function () {
     $('#archiveList').hide();
+
     /*AJOUT TACHE*/
     $('.addTask').click(function (e) {
+       /* let list = $(this).parent().siblings().find('ul');
+        let idList = list.id;
+        console.log(idList);*/
         e.preventDefault();
         $.post(
             'apiToDo.php',
@@ -9,6 +13,7 @@ $(document).ready(function () {
                 action: "createTask",
                 userId: $('#userId').val(),
                 titleTask: $('#titleTask').val()
+                // list:
             },
             function (idTask) {
                 $.post(
@@ -19,7 +24,7 @@ $(document).ready(function () {
                     },
                     function (result) {
                         let data = JSON.parse(result);
-                        $("#toDoList").append("<li class='liTask' id='" + data.id + "'>" +
+                        $('#toDoList').append("<li class='liTask' id='" + data.id + "'>" +
                             "<input class='liTaskTitle' readOnly='readonly' value='" + data.title + "'</li>");
                         $('#titleTask').val('');
                     }
@@ -180,6 +185,7 @@ $(document).ready(function () {
             'json'
         );
     });
+
 
 });
 

@@ -40,7 +40,7 @@ if (empty($_SESSION)) {
             <form methode="post">
                 <input type="text" id="userId" hidden value="<?= $_SESSION['id'] ?>">
                 <input type="text" id="titleTask" placeholder="Ajouter une tache">
-                <button class="addTask"> + </button>
+                <button class="addTask"> +</button>
             </form>
         </article>
 
@@ -56,16 +56,16 @@ if (empty($_SESSION)) {
             </ul>
         </article>
 
-     <!--   <article class="list">
+        <article class="list">
             <form methode="post">
-                <input type="text" id="userId" hidden value="<?/*= $_SESSION['id'] */?>">
+                <input type="text" id="userId" hidden value="<?= $_SESSION['id'] ?>">
                 <input type="text" id="titleNewList" placeholder="Créer une liste">
-                <button id="addTask">+</button>
+                <button id="addList">+</button>
             </form>
-        </article>-->
+        </article>
 
         <article class="list" onclick="displayArchive()" id="containerArchive">
-        <h3>Taches archivées</h3>
+            <h3>Taches archivées</h3>
             <ul id="archiveList">
                 <?php foreach ($tasksUser['archive'] as $key => $task) : ?>
                     <li class="liTask" id="<?= $task['id'] ?>">

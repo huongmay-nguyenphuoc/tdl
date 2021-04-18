@@ -8,7 +8,7 @@
     min-width: 50vw;
     justify-content: space-around;
 }
-.list, .liTask, #titleTask {
+.list, .liTask, #titleTask, #titleNewList {
     border-radius: 5px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 
-.liTaskTitle, .addTask, #titleTask, .addTask, .addDescription {
+.liTaskTitle, .addTask, #titleTask, .addTask, .addDescription, #addList, #titleNewList {
     cursor: default;
     background-color: transparent;
     outline: none;
@@ -59,7 +59,7 @@
     width: 100%;
 }
 
-#titleTask:hover, #titleTask:focus, .addDescription:hover {
+#titleTask:hover, #titleTask:focus, .addDescription:hover, #titleNewList:hover, #titleNewList:focus {
     background-color: #C9C4C4;
 }
 /*titre*/
@@ -93,7 +93,7 @@
     flex-grow: 1;
 }
 
-.addTask:hover {
+.addTask:hover, #addList {
     font-weight: bold;
 }
 
