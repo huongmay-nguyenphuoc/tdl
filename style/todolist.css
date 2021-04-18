@@ -1,0 +1,119 @@
+
+/*GENERAL*/
+
+#tableLists {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    min-width: 50vw;
+    justify-content: space-around;
+}
+.list, .liTask, #titleTask {
+    border-radius: 5px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid grey;
+    background: #EDECEC;
+}
+
+
+.liTaskTitle, .addTask, #titleTask, .addTask, .addDescription {
+    cursor: default;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 5px;
+    transition: 0.5s;
+}
+
+.liTaskTitle {
+    width: 100%;
+}
+
+.liTask {
+    border: 1px solid grey;
+    margin: 10px;
+    padding: 5px;
+    background-color: white;
+    transition: 0.3s;
+}
+.liTask:hover {
+    background-color: #F2F1F1;
+}
+
+
+/*LIST : TO DO */
+/*modal gen*/
+.modal {
+    width: 100%;
+    font-size: 80%;
+    padding: 10px;
+}
+.modal div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#titleTask:hover, #titleTask:focus, .addDescription:hover {
+    background-color: #C9C4C4;
+}
+/*titre*/
+.listAFaire .liTaskTitle {
+    border: 1px solid rgba(0,0,0,0);
+}
+
+.listAFaire .liTaskTitle:focus {
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+/*description*/
+.liTaskDesc {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.liTaskDesc:focus {
+    opacity: 1;
+}
+
+/*ajouter nouvelle tache*/
+.list form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list form input {
+    flex-grow: 1;
+}
+
+.addTask:hover {
+    font-weight: bold;
+}
+
+
+/*LISTE TACHES TERMINEES*/
+#doneList, #archiveList {
+    font-size: 80%;
+}
+
+
+.divClose {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#containerArchive, .divClose {
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+#containerArchive:hover, .divClose:hover {
+opacity: 1;
+}

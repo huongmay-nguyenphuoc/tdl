@@ -1,7 +1,7 @@
 $(document).ready(function () {
-
+    $('#archiveList').hide();
     /*AJOUT TACHE*/
-    $('#addTask').click(function (e) {
+    $('.addTask').click(function (e) {
         e.preventDefault();
         $.post(
             'apiToDo.php',
@@ -31,12 +31,20 @@ $(document).ready(function () {
 
 
     /*AFFICHAGE DETAILS D'UNE TACHE*/
-    $('body').on('click', '#toDoList .liTask', function () {
+    $('body').on('click', '.liTask', function () {
         let idTask = this.id;
         let thisLi = this;
 
+        /*Affiche le bouton pour archiver*/
+        if ($(thisLi).children(".divClose").length === 0 && $(thisLi).parents('#archiveList').length === 0) {
+            $('li').children('.divClose').fadeOut(200, function () {
+                $(this).remove();
+            });
+            $('<div class="divClose"><button class="liTaskArchive">Archiver x</button></div>').hide().prependTo($(thisLi)).fadeIn(200);
+        }
+
         //Ferme le détail de l'ancienne tache active
-        if ($(thisLi).children('.modal').length === 0) {
+        if ($(thisLi).parents('.listAFaire').length && $(thisLi).children('.modal').length === 0) {
             $('li').children('.modal').fadeOut(200, function () {
                 $(this).remove();
             });
@@ -128,7 +136,6 @@ $(document).ready(function () {
                 idTask: idTask,
             },
             function (endTask) {
-                console.log(endTask);
                 $(liTask).children('.modal').remove();
                 liTask.fadeOut(300, function () {
                     liTask.append("<input type='checkbox' checked disabled class='liTaskEnd'>" + endTask);
@@ -139,4 +146,43 @@ $(document).ready(function () {
         );
     });
 
+    /*ARCHIVER TACHE*/
+    $('body').on('click', '.liTaskArchive', function () {
+        let liTask = $(this).parents('li');
+        let idTask = $(this).parents('li').attr('id');
+
+        if ($(liTask).parents('.listAFaire').length) {
+            $.post(
+                'apiToDo.php',
+                {
+                    action: 'finish',
+                    idTask: idTask,
+                },
+                function (endTask) {
+                    $(liTask).children('.modal').remove();
+                },
+                'json'
+            );
+        }
+
+        $.post(
+            'apiToDo.php',
+            {
+                action: 'archive',
+                idTask: idTask
+            },
+            function (endTask) {
+                $(liTask).fadeOut(300, function () {
+                    $(liTask).children('.divClose').remove();
+                    $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
+                });
+            },
+            'json'
+        );
+    });
+
 });
+
+function displayArchive() {
+    $('#archiveList').toggle('slow');
+}

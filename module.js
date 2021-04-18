@@ -4,12 +4,14 @@ $(document).ready(function () {
         if ($(this).is('#callFormConnexion')) {
             $.get('views/formconnexion.php',
                 function (data) {
-                    $('#displayForm').html(data);
+                    $('#displayForm ul').html(data);
+                    $('.displayFormDiv').html("<p>Si tu veux créer un compte, <span class=\"callForm\" id=\"callFormInscription\">inscris-toi</span>.</p>");
                 });
         } else {
             $.get('views/forminscription.php',
                 function (data) {
-                    $('#displayForm').html(data);
+                    $('#displayForm ul').html(data);
+                    $('.displayFormDiv').html('<p>Si tu as déjà un compte, <span class="callForm" id="callFormConnexion">connecte-toi</span>.</p>');
                 });
         }
     });
@@ -87,10 +89,25 @@ $(document).ready(function () {
     });
 
 
+    /*LISTE*/
+    $('#displayForm').on('click', 'input', function () {
+        $(this).siblings('span').toggleClass('strike');
+    });
+
+    $('#displayForm').on('click', 'li', function () {
+        $(this).toggleClass('strike');
+        if ($(this).find('input').attr('checked')) {
+            $(this).find('input').removeAttr('checked');
+        } else {
+            $(this).find('input').attr('checked', true);
+        }
+    });
+
 });
 
 /*FONCTION COMPTEUR*/
 let count = 6;
+
 function decrement() {
     count--;
     if (count == 0) {

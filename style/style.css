@@ -1,49 +1,43 @@
 * {
     margin: 0;
     padding: 0;
-    /*border: 1px solid black;*/
+    border: 1px solid black;
     box-sizing: border-box;
     list-style-type: none;
 }
 
-.callForm, .buttonForm {
-    cursor: pointer;
+html, body {
+    height: 100%;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Open Sans', sans-serif;
 }
 
-.liTask {
-border: 1px solid grey;
-    margin: 10px;
+h1, h2, h3 {
+    font-family: 'Amatic SC', cursive;
+    font-size: 3vw;
+}
+main, body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+main {
     padding: 10px;
 }
 
-#tableLists {
+header {
     display: flex;
-    min-width: 50vw;
-    justify-content: space-evenly;
-}
-
-.list {
-    border: 1px solid grey;
-    height: fit-content;
-}
-.modal {
     width: 100%;
-}
-.modal div {
-    display: flex;
     justify-content: space-between;
-    width: 100%;
-    border: 1px solid black;
-}
-.liTaskDesc {
-    opacity: 0.5;
-    transition: 0.3s;
 }
 
-.liTaskDesc:focus {
-    opacity: 1;
+header div {
+display: flex;
 }
 
-.liTaskTitle {
-    cursor: default;
+header p {
+margin-left: 5px;
+margin-right: 5px;
 }
+

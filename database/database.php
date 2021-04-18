@@ -67,7 +67,11 @@ class database
         $request2 = $this->pdo->prepare("SELECT * FROM task WHERE id_user = ? AND status = 'done' ");
         $request2->execute([$idUser]);
         $tasksUserDone = $request2->fetchAll(PDO::FETCH_ASSOC);
-        $tasksUser = array('toDo' => $tasksUserToDo, 'done' => $tasksUserDone);
+
+        $request3 = $this->pdo->prepare("SELECT * FROM task WHERE id_user = ? AND status = 'archive' ");
+        $request3->execute([$idUser]);
+        $tasksUserArchive = $request3->fetchAll(PDO::FETCH_ASSOC);
+        $tasksUser = array('toDo' => $tasksUserToDo, 'done' => $tasksUserDone, 'archive' => $tasksUserArchive);
         return $tasksUser;
     }
 
@@ -76,6 +80,13 @@ class database
         $request = $this->pdo->prepare("UPDATE task SET status = 'done', END = NOW() WHERE id = ?");
         $request->execute([$idTask]);
         return date('d-m-Y');
+    }
+
+    public function archiveTask($idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE task SET status = 'archive' WHERE id = ?");
+        $request->execute([$idTask]);
+        return $idTask;
     }
 
     public function addDescription($description, $idTask)

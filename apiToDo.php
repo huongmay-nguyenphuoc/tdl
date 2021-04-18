@@ -4,10 +4,12 @@ $db = new database();
 
 /*CREATION TACHE*/
 if (isset($_POST['action']) && ($_POST['action'] === 'createTask')) {
-    $userId = htmlspecialchars($_POST['userId']);
-    $titleTask = htmlspecialchars($_POST['titleTask']);
-    $idTask = $db->insertTask($userId, $titleTask);
-    echo json_encode($idTask);
+    if (!empty($_POST['titleTask'])) {
+        $userId = htmlspecialchars($_POST['userId']);
+        $titleTask = htmlspecialchars($_POST['titleTask']);
+        $idTask = $db->insertTask($userId, $titleTask);
+        echo json_encode($idTask);
+    }
 }
 
 /*AFFICHAGE TACHE*/
@@ -37,5 +39,12 @@ if (isset($_POST['action']) && ($_POST['action'] === 'updateTitle')) {
 if (isset($_POST['action']) && ($_POST['action'] === 'finish')) {
     $idTask = htmlspecialchars($_POST['idTask']);
     $endTask = $db->endTask($idTask);
+    echo json_encode($endTask);
+}
+
+/*MARQUER COMME TERMINEE*/
+if (isset($_POST['action']) && ($_POST['action'] === 'archive')) {
+    $idTask = htmlspecialchars($_POST['idTask']);
+    $endTask = $db->archiveTask($idTask);
     echo json_encode($endTask);
 }
