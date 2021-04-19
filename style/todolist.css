@@ -7,6 +7,7 @@
     align-items: flex-start;
     min-width: 50vw;
     justify-content: space-around;
+    flex-wrap: nowrap;
 }
 .list, .liTask, #titleTask, #titleNewList {
     border-radius: 5px;
@@ -16,12 +17,13 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
-    border: 1px solid grey;
     background: #EDECEC;
+    filter: drop-shadow(5px 5px 5px #C9C4C4);
+    overflow: auto;
 }
 
 
-.liTaskTitle, .addTask, #titleTask, .addTask, .addDescription, #addList, #titleNewList {
+.liTaskTitle, .addTask, #titleTask, .addTask, .addDescription, .liTaskDesc, #addList, #titleNewList, .liTaskArchive {
     cursor: default;
     background-color: transparent;
     outline: none;
@@ -29,20 +31,22 @@
     padding: 5px;
     transition: 0.5s;
 }
+.addDescription:hover {
+    background: #EDECEC;
+}
 
 .liTaskTitle {
     width: 100%;
 }
 
 .liTask {
-    border: 1px solid grey;
     margin: 10px;
     padding: 5px;
-    background-color: white;
     transition: 0.3s;
+    background-color: #F2F1F1;
 }
 .liTask:hover {
-    background-color: #F2F1F1;
+    background-color: white;
 }
 
 
@@ -59,16 +63,15 @@
     width: 100%;
 }
 
-#titleTask:hover, #titleTask:focus, .addDescription:hover, #titleNewList:hover, #titleNewList:focus {
+#titleTask:hover, #titleTask:focus {
     background-color: #C9C4C4;
 }
 /*titre*/
-.listAFaire .liTaskTitle {
+#toDoList .liTaskTitle, .liTaskDesc {
     border: 1px solid rgba(0,0,0,0);
 }
 
-.listAFaire .liTaskTitle:focus {
-    background-color: white;
+#toDoList  .liTaskTitle:focus, .liTaskDesc:focus {
     border: 1px solid lightgray;
 }
 
@@ -80,6 +83,8 @@
 
 .liTaskDesc:focus {
     opacity: 1;
+    background-color: white;
+    cursor: text;
 }
 
 /*ajouter nouvelle tache*/
@@ -109,11 +114,20 @@
     justify-content: flex-end;
 }
 
+
 #containerArchive, .divClose {
     opacity: 0.5;
     transition: 0.2s;
+    cursor: pointer;
 }
 
 #containerArchive:hover, .divClose:hover {
 opacity: 1;
+}
+
+@media screen and (max-width: 640px) {
+#tableLists {
+    flex-direction: column;
+    height: 100%;
+}
 }

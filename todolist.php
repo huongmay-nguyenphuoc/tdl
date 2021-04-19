@@ -50,18 +50,10 @@ if (empty($_SESSION)) {
                 <?php foreach ($tasksUser['done'] as $key => $task) : ?>
                     <li class="liTask" id="<?= $task['id'] ?>">
                         <input class="liTaskTitle" readonly="readonly" value="<?= $task['title'] ?>">
-                        <input type='checkbox' checked disabled class='liTaskEnd'> <?= $task['end'] ?>
+                        <span><input type='checkbox' checked disabled class='liTaskEnd'> <?= $task['end'] ?></span>
                     </li>
                 <?php endforeach; ?>
             </ul>
-        </article>
-
-        <article class="list">
-            <form methode="post">
-                <input type="text" id="userId" hidden value="<?= $_SESSION['id'] ?>">
-                <input type="text" id="titleNewList" placeholder="Créer une liste">
-                <button id="addList">+</button>
-            </form>
         </article>
 
         <article class="list" onclick="displayArchive()" id="containerArchive">
@@ -70,7 +62,6 @@ if (empty($_SESSION)) {
                 <?php foreach ($tasksUser['archive'] as $key => $task) : ?>
                     <li class="liTask" id="<?= $task['id'] ?>">
                         <input class="liTaskTitle" readonly="readonly" value="<?= $task['title'] ?>">
-                        <input type='checkbox' checked disabled class='liTaskEnd'> <?= $task['end'] ?>
                     </li>
                 <?php endforeach; ?>
             </ul>

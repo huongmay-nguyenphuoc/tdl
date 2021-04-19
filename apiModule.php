@@ -31,7 +31,7 @@ if (isset($_POST['form']) && $_POST['form'] === 'inscription') {
             $hashedpassword = password_hash($password, PASSWORD_BCRYPT);
             $insert = $db->insertUser($email, $hashedpassword);
             if ($insert) {
-                $result = ['Wow, inscription réussie :)'];
+                $result = ['success'];
             } else {
                 $result = ['Oops, un problème est survenu :('];
             }

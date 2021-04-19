@@ -1,8 +1,6 @@
 /*INDEX*/
 
-.callForm, .buttonForm {
-    cursor: pointer;
-}
+
 
 main section, #displayForm, #displayForm ul {
     display: flex;
@@ -30,13 +28,16 @@ main section:nth-child(2) {
 #displayForm ul {
     height: 70%;
     width: 100%;
-    border: 2px solid black;
     padding: 10px;
     justify-content: space-around;
     align-items: start;
+    border-radius: 10px;
+    background: white;
+
 }
 #displayForm ul li {
     width: 100%;
+    cursor: default;
     border-bottom: 2px solid black;
 }
 .formModule, .formInfo {
@@ -55,9 +56,9 @@ main section:nth-child(2) {
     padding: 10px;
 }
 
-.message {
-font-size: 80%;
 
+[type="checkbox"] {
+    cursor: pointer;
 }
 
 .formModule input {
@@ -70,4 +71,8 @@ font-size: 80%;
 .strike {
     text-decoration: line-through;
     color: grey;
+}
+
+#message {
+    color: red;
 }

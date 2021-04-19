@@ -3,9 +3,6 @@ $(document).ready(function () {
 
     /*AJOUT TACHE*/
     $('.addTask').click(function (e) {
-       /* let list = $(this).parent().siblings().find('ul');
-        let idList = list.id;
-        console.log(idList);*/
         e.preventDefault();
         $.post(
             'apiToDo.php',
@@ -13,7 +10,6 @@ $(document).ready(function () {
                 action: "createTask",
                 userId: $('#userId').val(),
                 titleTask: $('#titleTask').val()
-                // list:
             },
             function (idTask) {
                 $.post(
@@ -33,7 +29,6 @@ $(document).ready(function () {
             'json'
         )
     });
-
 
     /*AFFICHAGE DETAILS D'UNE TACHE*/
     $('body').on('click', '.liTask', function () {
@@ -80,7 +75,7 @@ $(document).ready(function () {
 
     /*UPDATE TITRE*/
     // clique sur le titre pour pouvoir le modifier
-    $('body').on('click', '.liTaskTitle', function () {
+    $('body').on('click', '#toDoList .liTaskTitle', function () {
         let liTask = $(this).parents('li');
         if (liTask.children('.modal').length >= 1) {
             $(this).attr("readonly", false);
@@ -143,7 +138,7 @@ $(document).ready(function () {
             function (endTask) {
                 $(liTask).children('.modal').remove();
                 liTask.fadeOut(300, function () {
-                    liTask.append("<input type='checkbox' checked disabled class='liTaskEnd'>" + endTask);
+                    liTask.append("<span><input type='checkbox' checked disabled class='liTaskEnd'>" + endTask) +"</span>";
                     $(liTask).hide().appendTo($('#doneList')).fadeIn(300);
                 });
             },
@@ -164,26 +159,45 @@ $(document).ready(function () {
                     idTask: idTask,
                 },
                 function (endTask) {
+                    console.log(endTask);
                     $(liTask).children('.modal').remove();
+                    $.post(
+                        'apiToDo.php',
+                        {
+                            action: 'archive',
+                            idTask: idTask,
+                        },
+                        function (endTask) {
+                            $(liTask).fadeOut(300, function () {
+                                $(liTask).children('.divClose').remove();
+                                $(liTask).children('span').remove();
+                                $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
+                            });
+                        },
+                        'json'
+                    );
+                },
+                'json'
+            );
+
+        } else {
+
+            $.post(
+                'apiToDo.php',
+                {
+                    action: 'archive',
+                    idTask: idTask
+                },
+                function (endTask) {
+                    $(liTask).fadeOut(300, function () {
+                        $(liTask).children('.divClose').remove();
+                        $(liTask).children('span').remove();
+                        $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
+                    });
                 },
                 'json'
             );
         }
-
-        $.post(
-            'apiToDo.php',
-            {
-                action: 'archive',
-                idTask: idTask
-            },
-            function (endTask) {
-                $(liTask).fadeOut(300, function () {
-                    $(liTask).children('.divClose').remove();
-                    $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
-                });
-            },
-            'json'
-        );
     });
 
 

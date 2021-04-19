@@ -42,9 +42,9 @@ if (isset($_POST['action']) && ($_POST['action'] === 'finish')) {
     echo json_encode($endTask);
 }
 
-/*MARQUER COMME TERMINEE*/
+/*MARQUER COMME ARCHIVER*/
 if (isset($_POST['action']) && ($_POST['action'] === 'archive')) {
     $idTask = htmlspecialchars($_POST['idTask']);
-    $endTask = $db->archiveTask($idTask);
-    echo json_encode($endTask);
+    $dates = $db->archiveTask($idTask);
+    echo json_encode($dates);
 }

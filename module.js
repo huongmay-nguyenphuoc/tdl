@@ -31,7 +31,13 @@ $(document).ready(function () {
                 console.log(data);
                 let messages = JSON.parse(data);
                 for (let message of messages) {
-                    $('#message').append("<p>" + message + "</p>");
+
+                    if (message  === "success") {
+                        $("#message").append("<p>Wow, inscription réussie !</p>");
+                        $("#message").css('color', 'blue');
+                    } else {
+                        $('#message').append("<p>" + message + "</p>");
+                    }
                 }
             },
         );
@@ -53,14 +59,14 @@ $(document).ready(function () {
                     fail: 'Vérifie ton email.',
                     failPass: 'Vérifie ton mot de passe.',
                     failFields: 'Remplis tous les champs STP il n\'y en a que deux',
-                    success: 'Wow, tu as été connecté.e avec succès ! Redirection dans <span id="count"></span> secondes.'
+                    success: 'Wow, tu as été connecté.e avec succès ! Redirection dans <span id="count"></span> secondes...'
                 };
 
                 for (let code in messages) {
                     if (data === code) {
-                        // console.log(messages[message]);
                         $("#message").append("<p>" + messages[code] + "</p>");
                         if (data === "success") {
+                            $("#message").css('color', 'green');
                             decrement();
                         }
                     }
@@ -92,15 +98,6 @@ $(document).ready(function () {
     /*LISTE*/
     $('#displayForm').on('click', 'input', function () {
         $(this).siblings('span').toggleClass('strike');
-    });
-
-    $('#displayForm').on('click', 'li', function () {
-        $(this).toggleClass('strike');
-        if ($(this).find('input').attr('checked')) {
-            $(this).find('input').removeAttr('checked');
-        } else {
-            $(this).find('input').attr('checked', true);
-        }
     });
 
 });

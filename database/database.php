@@ -86,7 +86,9 @@ class database
     {
         $request = $this->pdo->prepare("UPDATE task SET status = 'archive' WHERE id = ?");
         $request->execute([$idTask]);
-        return $idTask;
+        $request2 =  $this->pdo->prepare("SELECT start FROM task WHERE id= ?");
+        $date = $request->execute([$idTask]);
+        return $date;
     }
 
     public function addDescription($description, $idTask)
